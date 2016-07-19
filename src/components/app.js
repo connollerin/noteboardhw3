@@ -20,17 +20,15 @@ class App extends Component {
     };
   }
 
-  addNote(text) {
-    const newNote = new Note(
+  addNote(name) {
+    const newNote =
       {
-        title: 'testing',
+        title: 'name',
         text: '# large',
         x: 400,
         y: 12,
         zIndex: 26,
-        content: 'text',
-      },
-    );
+      };
     const id = 4;
     this.setState({
       notes: this.state.notes.set(id, newNote),
@@ -59,7 +57,7 @@ class App extends Component {
     return (
       <div className="main">
         <Welcome />
-        <NewNoteBar id="newnotebar" onSearchChange={text => this.newNote(text)} />
+        <NewNoteBar id="newnotebar" onSearchChange={text => this.addNote(text)} />
         <br></br>
         <div id="notesection">
           {this.state.notes.entrySeq().map(([id, note]) =>

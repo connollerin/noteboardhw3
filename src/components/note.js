@@ -12,16 +12,18 @@ class Note extends Component {
       x: props.note.x,
       y: props.note.y,
       zIndex: props.note.zIndex,
-      content: props.note.content,
       isEditing: false,
     };
   }
 
+  rawMarkup() {
+    return { __html: this.renderSomeSection() };
+  }
   renderSomeSection() {
     if (this.state.isEditing) {
       return <div>editing!</div>;
     } else {
-      return <div><Textarea>{this.state.content}</Textarea></div>;
+      return <Textarea />;
     }
   }
   render() {
@@ -40,9 +42,9 @@ class Note extends Component {
         <div className="note-mover">
           <div>
             {this.state.title}
-            <i onClick={this.onDeleteClick} className="fa fa-trash-o" />
+            <i onClick={this.onDeleteClick} className="fa fa-trash-o"></i>
           </div>
-          <div className="noteBody" dangerouslySetInnerHTML={this.renderSomeSection()} />
+          <div className="noteBody"> {this.renderSomeSection()} </div>
         </div>
       </Draggable>
     );
