@@ -53,7 +53,7 @@ class Note extends Component {
         onDrag={this.onDrag}
         onStop={this.onStopDrag}
       >
-        <div className="note-mover">
+        <div className="note">
           <div className="titlebar">
             <div className="title">
               {this.props.note.title}
