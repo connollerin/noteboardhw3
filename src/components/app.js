@@ -7,6 +7,8 @@ import NewNoteBar from './newnotebar';
 
 console.log(marked('I am using _markdown_.'));
 
+// ordered map could help for keeping notes in order
+
 // example class based component (smart component)
 class App extends Component {
 
@@ -23,11 +25,12 @@ class App extends Component {
   addNote(name) {
     const newNote =
       {
-        title: 'name',
+        title: name,  // why isn't this working??
         text: '# large',
         x: 400,
         y: 12,
         zIndex: 26,
+        content: 'hi',
       };
     const id = 4;
     this.setState({
