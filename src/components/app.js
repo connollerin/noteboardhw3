@@ -51,14 +51,16 @@ class App extends Component {
 
 
   render() {
+    console.log(this.state.notes);
     return (
       <div className="main">
         <Welcome />
         <NewNoteBar id="newnotebar" addNote={this.addNote} onSearchChange={text => this.addNote(text)} />
         <br></br>
         <div>
-          {this.state.notes.entrySeq().map(([id, note]) =>
-            < Note key={id} id={id} note={note} editNote={this.editNote} />
+          {this.state.notes.entrySeq().map(([id, note]) => return (
+              < Note key={id} id={id} note={note} editNote={this.editNote} />
+            );
           )}
         </div>
       </div>

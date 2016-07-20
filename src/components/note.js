@@ -42,6 +42,7 @@ class Note extends Component {
     this.setState({ text: event.target.value });
     this.props.editNote(this.props.id, this.state);
   }
+  // on start drag, extra credit
   onDrag(e, ui) {
     const currentx = this.state.x;
     const currenty = this.state.y;
@@ -62,14 +63,22 @@ class Note extends Component {
     }
   }
   render() {
-    const stateX = this.state.x;
-    const stateY = this.state.y;
+    const stateX = this.props.note.x;
+    const stateY = this.props.note.y;
+    const STARTPOS = { x: 20, y: 20 };
+    const position = {
+      stateX,
+      stateY,
+      width: 200,
+      height: 200,
+    };
+    // console.l  og(position);
     return (
       <Draggable
         handle=".note-mover"
         grid={[25, 25]}
-        defaultPosition={{ stateX, stateY }}
-        position={null}
+        defaultPosition={{ STARTPOS }}
+        position={{ position }}
         onStart={this.onStartDrag}
         onDrag={this.onDrag}
         onStop={this.onStopDrag}
@@ -82,7 +91,7 @@ class Note extends Component {
             <div className="icons">
               <i onClick={this.onEdit} className="fa fa-pencil-square-o"></i>
               <i onClick={this.onDeleteClick} className="fa fa-trash-o"></i>
-              <i onClick={this.onMoveClick} className="fa fa-arrows note-mover"></i>
+              <i className="fa fa-arrows note-mover"></i>
             </div>
           </div>
           {this.renderSomeSection()}
