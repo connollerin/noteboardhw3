@@ -4,3 +4,16 @@ body {
   background: darken(white, 10%);
   margin: 50px;
 }
+
+.titlebar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.note-mover {
+  padding: 30px;
+  border: 1px black;
+  margin: 20px
+}

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import Draggable from 'react-draggable';
-// import Textarea from 'react-textarea-autosize';
-// import marked from 'marked';
+import Textarea from 'react-textarea-autosize';
+import marked from 'marked';
 
 // dont need state unless you have editing within the node
 // could have a state for editing (textbox) and non-editing- the box
@@ -13,17 +13,31 @@ class Note extends Component {
     super(props);
     this.state = {
       isEditing: false,
+      text: this.props.note.text,
     };
-  }
+    Note.propTypes = {
+      editNote: React.PropTypes.func,
+    };
 
-  rawMarkup() {
-    return { __html: this.renderSomeSection() };
+    this.onEdit = this.onEdit.bind(this);
+    this.onInputChange = this.onInputChange.bind(this);
+  }
+  onEdit(event) {
+    if (this.state.isEditing) {
+      this.setState({ isEditing: false });
+      this.props.editNote(this.props.id, this.state);
+    } else {
+      this.setState({ isEditing: true });
+    }
+  }
+  onInputChange(event) {
+    this.setState({ text: event.target.value });
   }
   renderSomeSection() {
     if (this.state.isEditing) {
-      return <div>editing!</div>;
+      return <Textarea onChange={this.onInputChange} defaultValue={this.state.text} />;
     } else {
-      return '<Textarea />'; // why did this have to be in quotes?
+      return <div className="noteBody" dangerouslySetInnerHTML={{ __html: marked(this.state.text) || 'oops' }} />;
     }
   }
   render() {
@@ -40,13 +54,17 @@ class Note extends Component {
         onStop={this.onStopDrag}
       >
         <div className="note-mover">
-          <div>
-            {this.props.note.title}
-            <i onClick={this.onEditClick} className="fa fa-pencil-square-o"></i>
-            <i onClick={this.onDeleteClick} className="fa fa-trash-o"></i>
-            <i onClick={this.onMoveClick} className="fa fa-arrows"></i>
+          <div className="titlebar">
+            <div className="title">
+              {this.props.note.title}
+            </div>
+            <div className="icons">
+              <i onClick={this.onEdit} className="fa fa-pencil-square-o"></i>
+              <i onClick={this.onDeleteClick} className="fa fa-trash-o"></i>
+              <i onClick={this.onMoveClick} className="fa fa-arrows"></i>
+            </div>
           </div>
-          <div className="noteBody" dangerouslySetInnerHTML={{ __html: this.renderSomeSection() || '' }} />
+          {this.renderSomeSection()}
         </div>
       </Draggable>
     );           // find a way to add marked inside the dangerouslySetInnerHTML!

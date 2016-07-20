@@ -22,12 +22,13 @@ class App extends Component {
     };
 
     this.addNote = this.addNote.bind(this);
+    this.editNote = this.editNote.bind(this);
   }
 
   addNote(name) {
     const newNote =
       {
-        title: name,  // why isn't this working??
+        title: name,
         text: '# large',
         x: 400,
         y: 12,
@@ -66,7 +67,7 @@ class App extends Component {
         <br></br>
         <div id="notesection">
           {this.state.notes.entrySeq().map(([id, note]) =>
-            < Note key={id} id={id} note={note} />
+            < Note key={id} id={id} note={note} editNote={this.editNote} />
           )}
         </div>
       </div>
