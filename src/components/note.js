@@ -7,13 +7,19 @@ import marked from 'marked';
 // could have a state for editing (textbox) and non-editing- the box
 // because you can't change your props, need to pass in the edit function
 
+// ended up keeping all the stuff so that I could edit and change it easily within here! lots of dot notation got mixed around
+
 class Note extends Component {
 
   constructor(props) {
     super(props);
     this.state = {
       isEditing: false,
+      title: this.props.note.title,
       text: this.props.note.text,
+      x: this.props.note.x,
+      y: this.props.note.y,
+      zIndex: this.props.note.zIndex,
     };
     Note.propTypes = {
       editNote: React.PropTypes.func,
@@ -21,6 +27,8 @@ class Note extends Component {
 
     this.onEdit = this.onEdit.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
+    this.onDrag = this.onDrag.bind(this);
+    this.onStopDrag = this.onStopDrag.bind(this);
   }
   onEdit(event) {
     if (this.state.isEditing) {
@@ -32,6 +40,19 @@ class Note extends Component {
   }
   onInputChange(event) {
     this.setState({ text: event.target.value });
+    this.props.editNote(this.props.id, this.state);
+  }
+  onDrag(e, ui) {
+    const currentx = this.state.x;
+    const currenty = this.state.y;
+    this.setState({
+      x: currentx + ui.deltaX,
+      y: currenty + ui.deltaY,
+    });
+    this.props.editNote(this.props.id, this.state);
+  }
+  onStopDrag() {
+    this.props.editNote(this.props.id, this.state);
   }
   renderSomeSection() {
     if (this.state.isEditing) {
@@ -41,14 +62,14 @@ class Note extends Component {
     }
   }
   render() {
-    const statex = this.props.x;
-    const statey = this.props.y;
+    const stateX = this.state.x;
+    const stateY = this.state.y;
     return (
       <Draggable
         handle=".note-mover"
         grid={[25, 25]}
-        defaultPosition={{ x: 20, y: 20 }}
-        position={{ statex, statey }}
+        defaultPosition={{ stateX, stateY }}
+        position={null}
         onStart={this.onStartDrag}
         onDrag={this.onDrag}
         onStop={this.onStopDrag}
@@ -56,18 +77,18 @@ class Note extends Component {
         <div className="note">
           <div className="titlebar">
             <div className="title">
-              {this.props.note.title}
+              {this.state.title}
             </div>
             <div className="icons">
               <i onClick={this.onEdit} className="fa fa-pencil-square-o"></i>
               <i onClick={this.onDeleteClick} className="fa fa-trash-o"></i>
-              <i onClick={this.onMoveClick} className="fa fa-arrows"></i>
+              <i onClick={this.onMoveClick} className="fa fa-arrows note-mover"></i>
             </div>
           </div>
           {this.renderSomeSection()}
         </div>
       </Draggable>
-    );           // find a way to add marked inside the dangerouslySetInnerHTML!
+    );           // so confused about draggable
   }
 }
 

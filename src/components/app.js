@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
 import Immutable from 'immutable';
-import marked from 'marked';
 import Welcome from './welcome';
 import Note from './note';
 import NewNoteBar from './newnotebar';
-
-console.log(marked('I am using _markdown_.'));
 
 // ordered map could help for keeping notes in order
 
@@ -29,13 +26,12 @@ class App extends Component {
     const newNote =
       {
         title: name,
-        text: '# large',
+        text: '# write here!',
         x: 400,
         y: 12,
         zIndex: 26,
-        content: 'hi',
       };
-    const id = 4;
+    const id = Math.random().toString();
     this.setState({
       notes: this.state.notes.set(id, newNote),
     });
@@ -47,15 +43,10 @@ class App extends Component {
     });
   }
 
-  editNote(id) {
-    const fields = 'blah';
+  editNote(id, note) {
     this.setState({
-      notes: this.state.notes.update(id, (n) => { return Object.assign({}, n, fields); }),
+      notes: this.state.notes.update(id, (n) => { return Object.assign({}, n, note); }),
     });
-  }
-
-  moveNote() {
-
   }
 
 
@@ -65,7 +56,7 @@ class App extends Component {
         <Welcome />
         <NewNoteBar id="newnotebar" addNote={this.addNote} onSearchChange={text => this.addNote(text)} />
         <br></br>
-        <div id="notesection">
+        <div>
           {this.state.notes.entrySeq().map(([id, note]) =>
             < Note key={id} id={id} note={note} editNote={this.editNote} />
           )}
