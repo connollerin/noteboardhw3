@@ -42,7 +42,9 @@ class Note extends Component {
         <div className="note-mover">
           <div>
             {this.props.note.title}
+            <i onClick={this.onEditClick} className="fa fa-pencil-square-o"></i>
             <i onClick={this.onDeleteClick} className="fa fa-trash-o"></i>
+            <i onClick={this.onMoveClick} className="fa fa-arrows"></i>
           </div>
           <div className="noteBody" dangerouslySetInnerHTML={{ __html: this.renderSomeSection() || '' }} />
         </div>
