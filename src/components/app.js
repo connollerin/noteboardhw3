@@ -20,6 +20,8 @@ class App extends Component {
       notes: Immutable.Map(),
       selectedNote: null,
     };
+
+    this.addNote = this.addNote.bind(this);
   }
 
   addNote(name) {
@@ -60,7 +62,7 @@ class App extends Component {
     return (
       <div className="main">
         <Welcome />
-        <NewNoteBar id="newnotebar" onSearchChange={text => this.addNote(text)} />
+        <NewNoteBar id="newnotebar" addNote={this.addNote} onSearchChange={text => this.addNote(text)} />
         <br></br>
         <div id="notesection">
           {this.state.notes.entrySeq().map(([id, note]) =>

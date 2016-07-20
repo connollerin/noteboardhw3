@@ -14,13 +14,6 @@ class Note extends Component {
     this.state = {
       isEditing: false,
     };
-    // this.state = {
-    //   title: props.note.title,
-    //   x: props.note.x,
-    //   y: props.note.y,
-    //   zIndex: props.note.zIndex,
-    //   isEditing: false,
-    // };
   }
 
   rawMarkup() {
