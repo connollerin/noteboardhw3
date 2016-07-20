@@ -8,17 +8,20 @@ class NewNoteBar extends Component {
     };
     this.state = { newtitle: '' };
     this.onInputChange = this.onInputChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
   onInputChange(event) {
     console.log(event.target.value);
     this.setState({ newtitle: event.target.value });
-    this.props.addNote(event.target.value);
+  }
+  onSubmit(event) {
+    this.props.addNote(this.state.newtitle);
   }
   render() {
     return (
       <div>
         <h1>Create a new note!</h1>
-        <input onChange={this.onInputChange} value={this.state.newtitle} />
+        <input onChange={this.onInputChange} value={this.state.newtitle} /><button onClick={this.onSubmit}>Submit</button>
       </div>
     );
   }
