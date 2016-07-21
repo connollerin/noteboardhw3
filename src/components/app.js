@@ -20,6 +20,7 @@ class App extends Component {
 
     this.addNote = this.addNote.bind(this);
     this.editNote = this.editNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
   }
 
   addNote(name) {
@@ -32,15 +33,18 @@ class App extends Component {
         zIndex: 26,
       };
     const id = Math.random().toString();
+    console.log(id);
     this.setState({
       notes: this.state.notes.set(id, newNote),
     });
   }
 
   deleteNote(id) {
+    console.log(id);
     this.setState({
       notes: this.state.notes.delete(id),
     });
+    console.log(this.state.notes);
   }
 
   editNote(id, note) {
@@ -51,14 +55,13 @@ class App extends Component {
 
 
   render() {
-    console.log(this.state.notes);
     return (
       <div className="main">
         <Welcome />
         <NewNoteBar id="newnotebar" addNote={this.addNote} onSearchChange={text => this.addNote(text)} />
         <br></br>
         <div>
-          {this.state.notes.entrySeq().map(([id, note]) => < Note key={id} id={id} note={note} editNote={this.editNote} />)}
+          {this.state.notes.entrySeq().map(([id, note]) => < Note key={id} id={id} note={note} editNote={this.editNote} deleteNote={this.deleteNote} />)}
         </div>
       </div>
     );

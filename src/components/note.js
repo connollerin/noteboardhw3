@@ -23,9 +23,11 @@ class Note extends Component {
     };
     Note.propTypes = {
       editNote: React.PropTypes.func,
+      deleteNote: React.PropTypes.func,
     };
 
     this.onEdit = this.onEdit.bind(this);
+    this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
     this.onDrag = this.onDrag.bind(this);
     this.onStopDrag = this.onStopDrag.bind(this);
@@ -37,6 +39,9 @@ class Note extends Component {
     } else {
       this.setState({ isEditing: true });
     }
+  }
+  onDeleteClick(event) {
+    this.props.deleteNote(this.props.id);
   }
   onInputChange(event) {
     this.setState({ text: event.target.value });
