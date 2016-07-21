@@ -21,7 +21,7 @@ class NewNoteBar extends Component {
     return (
       <div>
         <h1>Create a new note!</h1>
-        <input onChange={this.onInputChange} value={this.state.newtitle} /><button onClick={this.onSubmit}>Submit</button>
+        <input id="searchBar" onChange={this.onInputChange} value={this.state.newtitle} /><button onClick={this.onSubmit}>Submit</button>
       </div>
     );
   }

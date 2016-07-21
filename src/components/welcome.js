@@ -5,7 +5,7 @@ import React from 'react';
 const Welcome = () => {
   return (
     <div>
-      Welcome!
+      Welcome to your noteboard!
     </div>
   );
 };
