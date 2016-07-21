@@ -63,22 +63,12 @@ class Note extends Component {
     }
   }
   render() {
-    const stateX = this.props.note.x;
-    const stateY = this.props.note.y;
-    const STARTPOS = { x: 20, y: 20 };
-    const position = {
-      stateX,
-      stateY,
-      width: 200,
-      height: 200,
-    };
-    // console.l  og(position);
     return (
       <Draggable
         handle=".note-mover"
         grid={[25, 25]}
-        defaultPosition={{ STARTPOS }}
-        position={{ position }}
+        defaultPosition={{ x: this.props.note.x, y: this.props.note.y }}
+        position={null}
         onStart={this.onStartDrag}
         onDrag={this.onDrag}
         onStop={this.onStopDrag}
