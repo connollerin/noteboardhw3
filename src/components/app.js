@@ -4,7 +4,7 @@ import Welcome from './welcome';
 import Note from './note';
 import NewNoteBar from './newnotebar';
 
-// ordered map could help for keeping notes in order
+// app usesordered map could help for keeping notes in order
 
 // example class based component (smart component)
 class App extends Component {
@@ -24,6 +24,7 @@ class App extends Component {
     this.deleteNote = this.deleteNote.bind(this);
   }
 
+// adds new note to the map of notes using a random id
   addNote(name) {
     const newNote =
       {
@@ -45,6 +46,7 @@ class App extends Component {
     });
   }
 
+// Updates notes and zIndex for keeping the most recent note in front
   editNote(id, note) {
     this.setState({
       notes: this.state.notes.update(id, (n) => { return Object.assign({}, n, note); }),

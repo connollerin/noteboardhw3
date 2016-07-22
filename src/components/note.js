@@ -3,11 +3,8 @@ import Draggable from 'react-draggable';
 import Textarea from 'react-textarea-autosize';
 import marked from 'marked';
 
-// dont need state unless you have editing within the node
-// could have a state for editing (textbox) and non-editing- the box
-// because you can't change your props, need to pass in the edit function
-
-// ended up keeping all the stuff so that I could edit and change it easily within here! lots of dot notation got mixed around
+// note component contains the title and content of a note and allows the user to drag, edit, and delete the note by connecting back to the app
+// smart compenent to keep track of editing state and icon switches in addition to position and other props given from the app
 
 class Note extends Component {
 
@@ -34,6 +31,7 @@ class Note extends Component {
     this.onDrag = this.onDrag.bind(this);
     this.onStopDrag = this.onStopDrag.bind(this);
   }
+  // whenever the text is edited, need to update the zindex to move the note to the front and the icons showing editing state
   onEdit(event) {
     if (this.state.isEditing) {
       this.setState({ isEditing: false, zIndex: this.props.updatezIndex + 1, editIcon: 'fa fa-pencil-square-o' });
@@ -49,6 +47,7 @@ class Note extends Component {
     this.setState({ text: event.target.value });
     this.props.editNote(this.props.id, this.state);
   }
+  // zindex is updated whenever dragged
   onStartDrag() {
     this.setState({ zIndex: this.props.updatezIndex + 1 });
     this.props.editNote(this.props.id, this.state);
@@ -65,6 +64,7 @@ class Note extends Component {
   onStopDrag() {
     this.props.editNote(this.props.id, this.state);
   }
+  // uses text area for editing and marked html for non editing state
   renderSomeSection() {
     if (this.state.isEditing) {
       return <Textarea onChange={this.onInputChange} defaultValue={this.state.text} />;

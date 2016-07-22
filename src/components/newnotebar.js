@@ -1,5 +1,7 @@
 import React, { Component } from 'react';
 
+// this component allows the user to create a new note by typing in a title
+
 class NewNoteBar extends Component {
   constructor(props) {
     super(props);
