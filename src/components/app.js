@@ -30,7 +30,7 @@ class App extends Component {
         text: '# write here!',
         x: 400,
         y: 12,
-        zIndex: 26,
+        zIndex: 0,
       };
     const id = Math.random().toString();
     console.log(id);
