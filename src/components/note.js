@@ -20,10 +20,12 @@ class Note extends Component {
       x: this.props.note.x,
       y: this.props.note.y,
       zIndex: this.props.note.zIndex,
+      editIcon: 'fa fa-pencil-square-o',
     };
     Note.propTypes = {
       editNote: React.PropTypes.func,
       deleteNote: React.PropTypes.func,
+      updatezIndex: React.PropTypes.number,
     };
 
     this.onEdit = this.onEdit.bind(this);
@@ -34,10 +36,10 @@ class Note extends Component {
   }
   onEdit(event) {
     if (this.state.isEditing) {
-      this.setState({ isEditing: false });
+      this.setState({ isEditing: false, zIndex: this.props.updatezIndex + 1, editIcon: 'fa fa-pencil-square-o' });
       this.props.editNote(this.props.id, this.state);
     } else {
-      this.setState({ isEditing: true });
+      this.setState({ isEditing: true, editIcon: 'fa fa-check' });
     }
   }
   onDeleteClick(event) {
@@ -54,6 +56,7 @@ class Note extends Component {
     this.setState({
       x: currentx + ui.deltaX,
       y: currenty + ui.deltaY,
+      zIndex: this.props.updatezIndex + 1,
     });
     this.props.editNote(this.props.id, this.state);
   }
@@ -67,6 +70,15 @@ class Note extends Component {
       return <div className="noteBody" dangerouslySetInnerHTML={{ __html: marked(this.state.text) || 'oops' }} />;
     }
   }
+  // renderEditIcon() {
+  //   if (this.state.isEditing) {
+  //     return <i onClick={this.onEdit} className="fa fa-check"></i>;
+  //   } else {
+  //     return <i onClick={this.onEdit} className="fa fa-pencil-square-o"></i>;
+  //   }
+  // }
+
+  // https://rnplay.org/apps/NImYmQ
   render() {
     return (
       <Draggable
@@ -78,13 +90,13 @@ class Note extends Component {
         onDrag={this.onDrag}
         onStop={this.onStopDrag}
       >
-        <div className="note">
+        <div className="note" style={{ zIndex: this.state.zIndex }}>
           <div className="titlebar">
             <div className="title">
               {this.state.title}
             </div>
             <div className="icons">
-              <i onClick={this.onEdit} className="fa fa-pencil-square-o"></i>
+              <i onClick={this.onEdit} className={this.state.editIcon}></i>
               <i onClick={this.onDeleteClick} className="fa fa-trash-o"></i>
               <i className="fa fa-arrows note-mover"></i>
             </div>

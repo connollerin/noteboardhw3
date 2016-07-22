@@ -16,6 +16,7 @@ class App extends Component {
     this.state = {
       notes: Immutable.Map(),
       selectedNote: null,
+      updatezIndex: 0,
     };
 
     this.addNote = this.addNote.bind(this);
@@ -48,9 +49,12 @@ class App extends Component {
   }
 
   editNote(id, note) {
+    console.log(this.state.updatezIndex);
     this.setState({
       notes: this.state.notes.update(id, (n) => { return Object.assign({}, n, note); }),
+      updatezIndex: this.state.updatezIndex + 1,
     });
+    console.log(this.state.updatezIndex);
   }
 
 // http://webdesign.tutsplus.com/tutorials/css-experiments-with-a-search-form-input-and-button--cms-22069
@@ -61,7 +65,7 @@ class App extends Component {
         <NewNoteBar id="newnotebar" addNote={this.addNote} onSearchChange={text => this.addNote(text)} />
         <br></br>
         <div>
-          {this.state.notes.entrySeq().map(([id, note]) => < Note key={id} id={id} note={note} editNote={this.editNote} deleteNote={this.deleteNote} />)}
+          {this.state.notes.entrySeq().map(([id, note]) => < Note key={id} id={id} note={note} updatezIndex={this.updatezIndex} editNote={this.editNote} deleteNote={this.deleteNote} />)}
         </div>
       </div>
     );
