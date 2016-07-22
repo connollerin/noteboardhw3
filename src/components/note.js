@@ -25,12 +25,12 @@ class Note extends Component {
     Note.propTypes = {
       editNote: React.PropTypes.func,
       deleteNote: React.PropTypes.func,
-      updatezIndex: React.PropTypes.number,
     };
 
     this.onEdit = this.onEdit.bind(this);
     this.onDeleteClick = this.onDeleteClick.bind(this);
     this.onInputChange = this.onInputChange.bind(this);
+    this.onStartDrag = this.onStartDrag.bind(this);
     this.onDrag = this.onDrag.bind(this);
     this.onStopDrag = this.onStopDrag.bind(this);
   }
@@ -39,7 +39,7 @@ class Note extends Component {
       this.setState({ isEditing: false, zIndex: this.props.updatezIndex + 1, editIcon: 'fa fa-pencil-square-o' });
       this.props.editNote(this.props.id, this.state);
     } else {
-      this.setState({ isEditing: true, editIcon: 'fa fa-check' });
+      this.setState({ isEditing: true, editIcon: 'fa fa-check', zIndex: this.props.updatezIndex + 1 });
     }
   }
   onDeleteClick(event) {
@@ -49,14 +49,16 @@ class Note extends Component {
     this.setState({ text: event.target.value });
     this.props.editNote(this.props.id, this.state);
   }
-  // on start drag, extra credit
+  onStartDrag() {
+    this.setState({ zIndex: this.props.updatezIndex + 1 });
+    this.props.editNote(this.props.id, this.state);
+  }
   onDrag(e, ui) {
     const currentx = this.state.x;
     const currenty = this.state.y;
     this.setState({
       x: currentx + ui.deltaX,
       y: currenty + ui.deltaY,
-      zIndex: this.props.updatezIndex + 1,
     });
     this.props.editNote(this.props.id, this.state);
   }
@@ -70,13 +72,6 @@ class Note extends Component {
       return <div className="noteBody" dangerouslySetInnerHTML={{ __html: marked(this.state.text) || 'oops' }} />;
     }
   }
-  // renderEditIcon() {
-  //   if (this.state.isEditing) {
-  //     return <i onClick={this.onEdit} className="fa fa-check"></i>;
-  //   } else {
-  //     return <i onClick={this.onEdit} className="fa fa-pencil-square-o"></i>;
-  //   }
-  // }
 
   // https://rnplay.org/apps/NImYmQ
   render() {
