@@ -4,7 +4,7 @@ import Textarea from 'react-textarea-autosize';
 import marked from 'marked';
 
 // note component contains the title and content of a note and allows the user to drag, edit, and delete the note by connecting back to the app
-// smart compenent to keep track of editing state and icon switches in addition to position and other props given from the app
+// smart component to keep track of editing state and icon switches in addition to position and other props given from the app
 
 class Note extends Component {
 
@@ -52,6 +52,7 @@ class Note extends Component {
     this.setState({ zIndex: this.props.updatezIndex + 1 });
     this.props.editNote(this.props.id, this.state);
   }
+  // used https://github.com/mzabriskie/react-draggable/blob/master/example/index.html for moving with deltaX deltaY
   onDrag(e, ui) {
     const currentx = this.state.x;
     const currenty = this.state.y;
@@ -73,12 +74,13 @@ class Note extends Component {
     }
   }
 
-  // https://rnplay.org/apps/NImYmQ
+// Draggable component for the individual notes to be moved around
+// http://jqueryui.com/draggable/#snap-to for grid ideas
   render() {
     return (
       <Draggable
         handle=".note-mover"
-        grid={[25, 25]}
+        grid={[10, 10]}
         defaultPosition={{ x: this.props.note.x, y: this.props.note.y }}
         position={null}
         onStart={this.onStartDrag}
@@ -99,7 +101,7 @@ class Note extends Component {
           {this.renderSomeSection()}
         </div>
       </Draggable>
-    );           // so confused about draggable
+    );
   }
 }
 

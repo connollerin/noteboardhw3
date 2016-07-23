@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
-// this component allows the user to create a new note by typing in a title
+// this smart component allows the user to create a new note by typing in a title
+// code adapted from js-starter-workshop search bar tbh
 
 class NewNoteBar extends Component {
   constructor(props) {
@@ -13,7 +14,6 @@ class NewNoteBar extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
   onInputChange(event) {
-    console.log(event.target.value);
     this.setState({ newtitle: event.target.value });
   }
   onSubmit(event) {

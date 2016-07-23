@@ -15,7 +15,6 @@ class App extends Component {
     // init component state here
     this.state = {
       notes: Immutable.Map(),
-      selectedNote: null,
       updatezIndex: 0,
     };
 
@@ -54,7 +53,6 @@ class App extends Component {
     });
   }
 
-// http://webdesign.tutsplus.com/tutorials/css-experiments-with-a-search-form-input-and-button--cms-22069
   render() {
     return (
       <div className="main">
