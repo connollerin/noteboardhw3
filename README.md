@@ -1,1 +1,6 @@
 # js-starter with react
+I created a react app with a newnotebar component and a note component, both of which are smart to keep it simple for updating when the user edits or moves the note around. The app keeps track of notes in a map, and notes can be deleted, moved around, and edited using the icons on the title bar, and whichever was dragged or edited last is shown on top of the other.
+
+It took me forever to figure out the syntax for the draggable parameters, and I’m not sure if that’s because my note is a smart note or what. I think with a lot of these addable components are confusing and if we had more time I would try to understand what I was doing wrong more fully, but for now, it works. I guess if I were to do this again I would follow Tim’s suggestion and not make the note component smart. It was probably unnecessary and could have kept things organized in the app, but it was easier for me to access props that I wanted with a state.
+
+For extra credit, I added some style changes including wrapping the text if its really long, changed the edit icon to a check while editing, and added the zIndex for ordering a note to the front when you edit or move the note. I also snap to a small 10x10 grid.
