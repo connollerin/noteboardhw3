@@ -1,5 +1,5 @@
 import Firebase from 'firebase';
-import App from './components/app';
+// import App from './components/app'; DO WE NEED THIS?
 
 const config = {
   apiKey: 'AIzaSyBw0jHQteltkYoXIQmpDQVX0SkBn-32YgA',
@@ -12,21 +12,19 @@ Firebase.initializeApp(config);
 const database = Firebase.database();
 
 // attempt to read from firebase
-export function readFromFirebase() {
+export function onNewNoteChange(callback) {
   database.ref('notes').on('value', (snapshot) => {
-    App.componentDidMount(snapshot);
+    callback(snapshot.val());
   });
 }
-export function deleteANote(callback) {
+export function deleteANote(id) {
   database.ref('notes').child(id).remove();
 }
-export function updateANote(callback) {
-  database.ref('notes').child(id).update();
+export function updateANote(id, x, y, title, isEditing, text, zIndex, editIcon) {
+  database.ref('notes').child(id).update({ x, y, title, isEditing, text, zIndex, editIcon });
 }
-export function addANote(callback) {
-  const id = database.ref('notes').push();
-  // somehow return the id back to the app?
+export function addANote(newnote) {
+  const id = database.ref('notes').push().key;
+  database.ref('notes').child(id).set(newnote);
+  // somehow return the new note?
 }
-
-
-// export function fetchNotes(callback) {}

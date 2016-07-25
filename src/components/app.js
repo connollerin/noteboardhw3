@@ -3,7 +3,7 @@ import Immutable from 'immutable';
 import Welcome from './welcome';
 import Note from './note';
 import NewNoteBar from './newnotebar';
-import * as firebasedb from './firebasedb';
+import * as firebasedb from '../firebasedb';
 
 // app usesordered map could help for keeping notes in order
 
@@ -19,14 +19,22 @@ class App extends Component {
       updatezIndex: 0,
     };
 
-    this.componentDidMount = this.componentDidMount.bind(this);
+    this.noteChangeCallback = this.noteChangeCallback.bind(this);
     this.addNote = this.addNote.bind(this);
     this.editNote = this.editNote.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
+
+    firebasedb.onNewNoteChange(this.noteChangeCallback);
   }
-  // componentDidMount(snapshot) {
-  //   this.setState(snapshot);
-  // }
+
+  // componentDidMount calls subscription on the callback and sets the state, or like i have include it in the constructor
+
+  noteChangeCallback(snapshotVal) {
+    // call firebase onNewNotes and pass in callback
+    this.setState({
+      notes: Immutable.Map(snapshotVal),
+    });
+  }
 
 // adds new note to the map of notes using a random id
   addNote(name) {
@@ -42,12 +50,14 @@ class App extends Component {
     this.setState({
       notes: this.state.notes.set(id, newNote),
     });
+    firebasedb.addANote(newNote); // is this right?
   }
 
   deleteNote(id) {
     this.setState({
       notes: this.state.notes.delete(id),
     });
+    firebasedb.deleteANote(id);
   }
 
 // Updates notes and zIndex for keeping the most recent note in front
@@ -56,6 +66,7 @@ class App extends Component {
       notes: this.state.notes.update(id, (n) => { return Object.assign({}, n, note); }),
       updatezIndex: this.state.updatezIndex + 1,
     });
+    firebasedb.updateANote(id, note.x, note.y, note.title, note.isEditing, note.text, note.zIndex, note.editIcon);
   }
 
   render() {
