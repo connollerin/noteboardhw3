@@ -3,6 +3,7 @@ import Immutable from 'immutable';
 import Welcome from './welcome';
 import Note from './note';
 import NewNoteBar from './newnotebar';
+import * as firebasedb from './firebasedb';
 
 // app usesordered map could help for keeping notes in order
 
@@ -18,10 +19,14 @@ class App extends Component {
       updatezIndex: 0,
     };
 
+    this.componentDidMount = this.componentDidMount.bind(this);
     this.addNote = this.addNote.bind(this);
     this.editNote = this.editNote.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
   }
+  // componentDidMount(snapshot) {
+  //   this.setState(snapshot);
+  // }
 
 // adds new note to the map of notes using a random id
   addNote(name) {
