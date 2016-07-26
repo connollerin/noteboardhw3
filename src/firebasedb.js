@@ -20,8 +20,16 @@ export function onNewNoteChange(callback) {
 export function deleteANote(id) {
   database.ref('notes').child(id).remove();
 }
-export function updateANote(id, x, y, title, isEditing, text, zIndex, editIcon) {
-  database.ref('notes').child(id).update({ x, y, title, isEditing, text, zIndex, editIcon });
+export function editANote(id, isEditing, zIndex, editIcon) {
+  database.ref('notes').child(id).update({ isEditing, zIndex, editIcon });
+}
+export function moveANote(id, x, y) {
+  console.log('firebase');
+  console.log(x, y);
+  database.ref('notes').child(id).update({ x, y });
+}
+export function changeAText(id, text) {
+  database.ref('notes').child(id).update({ text });
 }
 export function addANote(newnote) {
   const id = database.ref('notes').push().key;

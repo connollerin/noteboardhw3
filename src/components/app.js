@@ -16,13 +16,15 @@ class App extends Component {
     // init component state here
     this.state = {
       notes: Immutable.Map(),
-      updatezIndex: 0,
+      updatezIndex: 1,
     };
 
     this.noteChangeCallback = this.noteChangeCallback.bind(this);
     this.addNote = this.addNote.bind(this);
     this.editNote = this.editNote.bind(this);
     this.deleteNote = this.deleteNote.bind(this);
+    this.moveNote = this.moveNote.bind(this);
+    this.changeText = this.changeText.bind(this);
 
     firebasedb.onNewNoteChange(this.noteChangeCallback);
   }
@@ -40,6 +42,8 @@ class App extends Component {
   addNote(name) {
     const newNote =
       {
+        isEditing: false,
+        editIcon: 'fa fa-pencil-square-o',
         title: name,
         text: '# write here!',
         x: 400,
@@ -61,12 +65,21 @@ class App extends Component {
   }
 
 // Updates notes and zIndex for keeping the most recent note in front
-  editNote(id, note) {
+  editNote(id, isEditing, zIndex, editIcon) {
+    firebasedb.editANote(id, isEditing, zIndex, editIcon);
     this.setState({
-      notes: this.state.notes.update(id, (n) => { return Object.assign({}, n, note); }),
       updatezIndex: this.state.updatezIndex + 1,
     });
-    firebasedb.updateANote(id, note.x, note.y, note.title, note.isEditing, note.text, note.zIndex, note.editIcon);
+  }
+
+  moveNote(id, x, y) {
+    console.log('app');
+    console.log(x, y);
+    firebasedb.moveANote(id, x, y);
+  }
+
+  changeText(id, text) {
+    firebasedb.changeAText(id, text);
   }
 
   render() {
@@ -76,7 +89,8 @@ class App extends Component {
         <NewNoteBar id="newnotebar" addNote={this.addNote} onSearchChange={text => this.addNote(text)} />
         <br></br>
         <div>
-          {this.state.notes.entrySeq().map(([id, note]) => < Note key={id} id={id} note={note} updatezIndex={this.state.updatezIndex} editNote={this.editNote} deleteNote={this.deleteNote} />)}
+          {this.state.notes.entrySeq().map(([id, note]) =>
+            < Note key={id} id={id} note={note} updatezIndex={this.state.updatezIndex} editNote={this.editNote} deleteNote={this.deleteNote} moveNote={this.moveNote} changeText={this.changeText} />)}
         </div>
       </div>
     );
