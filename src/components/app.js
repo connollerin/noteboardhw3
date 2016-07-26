@@ -53,6 +53,7 @@ class App extends Component {
     const id = Math.random().toString();
     this.setState({
       notes: this.state.notes.set(id, newNote),
+      updatezIndex: this.state.updatezIndex + 1,
     });
     firebasedb.addANote(newNote); // is this right?
   }
@@ -75,6 +76,9 @@ class App extends Component {
   moveNote(id, x, y) {
     console.log('app');
     console.log(x, y);
+    this.setState({
+      updatezIndex: this.state.updatezIndex + 1,
+    });
     firebasedb.moveANote(id, x, y);
   }
 
