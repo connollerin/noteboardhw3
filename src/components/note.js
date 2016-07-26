@@ -68,10 +68,9 @@ class Note extends Component {
         handle=".note-mover"
         grid={[10, 10]}
         defaultPosition={{ x: this.props.note.x, y: this.props.note.y }}
-        position={null}
+        position={{ x: this.props.note.x, y: this.props.note.y }}
         onStart={this.onStartDrag}
         onDrag={this.onDrag}
-        onStop={this.onStopDrag}
       >
         <div className="note" style={{ zIndex: this.props.note.zIndex }}>
           <div className="titlebar">
